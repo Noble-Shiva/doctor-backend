@@ -1,20 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const config = require('config');
+const {email,ccemail,bccemail,organisation} = require('../../config');
 const { check, validationResult } = require('express-validator');
-const normalize = require('normalize-url');
-
 
 const Appointment = require('../../models/Appointment');
 const generateId = require('../../utils/uuidGenerator');
 const EmailService = require('../../utils/emailService');
 const moment = require('moment');
 
-const fromemail = config.get('fromemail');
-const toemail = config.get('toemail');
-const ccemail = config.get('ccemail');
-const bccemail = config.get('bccemail');
-const fromname = config.get('fromname');
 
 // @route   GET api/appointment/test
 // @desc    Tests appointment route
@@ -75,10 +68,10 @@ router.post(
             // res.json({ msg: 'Appointment created successfully!', appointment: appointment });
 
             let info = await EmailService.sendMail({
-                from: `${fromname} <${fromemail}>`, // sender address
-                to: `${toemail}, ${appointmentBody?.email}`, // list of receivers
-                cc: `${ccemail}`,
-                bcc: `${bccemail}`,
+                from: `"${organisation}" <${email}>`, // sender address
+                to: `${ appointmentBody?.name }, ${ appointmentBody?.email }`, // list of receivers
+                cc: `${email}`,
+                bcc: `${ bccemail }`,
                 subject: 'Appointment Request', // Subject line
                 text: `There is a new appointment scheduled for ${appointmentBody?.name} on ${moment(appointmentBody?.appointmentDate).format('DD MMM YYYY, ddd')}`, // plain text body
                 html: ` <!DOCTYPE html>

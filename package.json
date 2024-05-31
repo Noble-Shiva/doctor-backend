@@ -13,7 +13,6 @@
   "author": "siano",
   "license": "MIT",
   "dependencies": {
-    "@netlify/functions": "^2.7.0",
     "axios": "^0.21.0",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.3",
@@ -29,7 +28,6 @@
     "multer-gridfs-storage": "^5.0.2",
     "nodemailer": "^6.9.1",
     "normalize-url": "^5.3.0",
-    "serverless-http": "^3.2.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

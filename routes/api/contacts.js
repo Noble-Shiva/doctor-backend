@@ -1,18 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const config = require('config');
+const {email,ccemail,bccemail,organisation} = require('../../config');
 const { check, validationResult } = require('express-validator');
-const normalize = require('normalize-url');
 
 const Contact = require('../../models/Contact');
 const generateId = require('../../utils/uuidGenerator');
 const EmailService = require('../../utils/emailService');
-
-const fromemail = config.get('fromemail');
-const toemail = config.get('toemail');
-const bccemail = config.get('bccemail');
-const fromname = config.get('fromname');
-
 
 // @route   GET api/contact/test
 // @desc    Tests contact route
@@ -74,9 +67,9 @@ router.post(
             }
 
             let info = await EmailService.sendMail({
-                from: `${fromname} <${fromemail}>`, // sender address
+                from: `"${organisation}" <${email}>`, // sender address
                 // to: `${ body?.name }, ${ body?.email }`, // list of receivers
-                to: toemail,
+                to: email,
                 // cc: `${ ccemail } `,
                 bcc: `${ bccemail }`,
                 subject: 'Contact Request', // Subject line
